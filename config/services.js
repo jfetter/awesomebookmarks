@@ -6,10 +6,27 @@ myApp.service("LinkService",[ "$http", function($http){
 	this.links = [];
 
 	this.addLink = function(link){
-		this.links.push(link);
-		$http.post("http://localhost:3005/api/add", link).then(function(res) {
+		console.log("links 1", this.links)
+		//use arrow function to preserve the "this" from before api request
+		$http.post("http://localhost:3005/api/add", link).then( res => {
+			this.links.push(res);
 			console.log(res);
+			console.log("add links 2",this.links)
 		});
+	};
+
+	this.getLinks = function(){
+		console.log("get links 1", this.links)
+		if (this.links.length === 0){
+		$http.get("http://localhost:3005/api/get").then( res => {
+			//res = res.toString();
+			//res = JSON.parse(res)
+			//&format=json
+			this.links.push(res);
+			console.log("get links 2",this.links)
+			});
+		}
+		return this.links;
 	};
 
 	this.tagLinks = function(tagName){
@@ -22,6 +39,7 @@ myApp.service("LinkService",[ "$http", function($http){
 			})
 		})
 	}
+
 
 
 }]);

@@ -3,10 +3,15 @@
 var myApp = angular.module("myApp");
 
 myApp.controller("mainCtrl", ["LinkService","$scope", function(LinkService, $scope){
-	$scope.title = "MAIN HTMLE PAGE !!!"
-	$scope.links = LinkService.links
-	console.log($scope.links)
-
+	$scope.title = "MAIN PAGE !!!"
+	LinkService.getLinks();
+	// when the links are back from the backend update the page
+	$scope.$watchCollection(function(){
+		return LinkService.links;
+	}, function(links){
+		$scope.links = LinkService.links;
+		console.log("controller: $scope.links", $scope.links)
+	})
 }]);
 
 myApp.controller("newlinkCtrl", ["LinkService","$scope", function(LinkService, $scope){
@@ -24,7 +29,7 @@ myApp.controller("newlinkCtrl", ["LinkService","$scope", function(LinkService, $
 }]);
 
 myApp.controller("tagCtrl", ["LinkService", "$scope", "$stateParams", function(LinkService, $scope, $stateParams){
-	$scope.title = "TAG"
+	$scope.title = "TAG PAGE FOR "
 	$scope.links = LinkService.tagLinks($stateParams.tagname);
 	console.log($scope.links);
 }]);

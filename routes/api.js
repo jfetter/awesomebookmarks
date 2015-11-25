@@ -12,6 +12,12 @@ router.post("/add", function(req, res){
 	});
 });
 
+router.get("/get", function(req, res){
+	Link.find({}, function(err, allLinks){
+		if (err) return res.status(400).send(err)
+		res.send(allLinks)
+	});
+});
 
 
 module.exports = router;

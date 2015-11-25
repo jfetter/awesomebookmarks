@@ -1,6 +1,9 @@
-<h2> {{title}} </h2>
+<h2 ng-show="links"> {{title}} </h2>
 
+<h3 ng-hide="links"> Loading ...</h3>
+	
 <div ng-repeat="link in links">
+	<p>{{links}}</p>
 	<div>
 		<a href="">{{link.link}}</a>
 	</div>
